@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${portfolio.fullName} + ' — Showcase'">Portfolio</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/portfolio.css}"/>
+    <link rel="stylesheet" th:href="@{/css/showcase.css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <th:block th:switch="${portfolio.theme}">
+        <th:block th:case="'sunset'"><style>:root{--p:#e85d04;--p2:#f48c06;--bg:#fff8f0;--card:#fff3e5}</style></th:block>
+        <th:block th:case="'forest'"><style>:root{--p:#2d6a4f;--p2:#52b788;--bg:#f0faf4;--card:#e8f5ed}</style></th:block>
+        <th:block th:case="'midnight'"><style>:root{--p:#7c3aed;--p2:#a855f7;--bg:#0f0f1a;--card:#1a1a2e;--text:#e2e8f0;--text2:#94a3b8}</style></th:block>
+        <th:block th:case="'rose'"><style>:root{--p:#e11d48;--p2:#f43f5e;--bg:#fff1f2;--card:#ffe4e6}</style></th:block>
+        <th:block th:case="'slate'"><style>:root{--p:#334155;--p2:#475569;--bg:#f8fafc;--card:#f1f5f9}</style></th:block>
+        <th:block th:case="*"><style>:root{--p:#0369a1;--p2:#0ea5e9;--bg:#f0f9ff;--card:#e0f2fe}</style></th:block>
+    </th:block>
+</head>
+<body class="portfolio-body showcase-body">
+
+    <div class="share-bar">
+        <span>✦ Created with AutoFolio</span>
+        <a href="/create" class="share-cta">Build Yours →</a>
+    </div>
+
+    <!-- Big project-forward hero -->
+    <header class="showcase-hero">
+        <div class="pf-container">
+            <div class="showcase-top">
+                <div class="sc-avatar"><span th:text="${portfolio.fullName.substring(0,1).toUpperCase()}">R</span></div>
+                <div>
+                    <h1 th:text="${portfolio.fullName}">Full Name</h1>
+                    <p th:text="${portfolio.jobTitle}">Role</p>
+                    <p class="pf-bio" th:text="${portfolio.bio}">Bio</p>
+                    <div class="pf-social">
+                        <a th:if="${portfolio.githubUrl != null and !portfolio.githubUrl.isEmpty()}" th:href="${portfolio.githubUrl}" target="_blank" class="social-btn">GitHub</a>
+                        <a th:if="${portfolio.linkedinUrl != null and !portfolio.linkedinUrl.isEmpty()}" th:href="${portfolio.linkedinUrl}" target="_blank" class="social-btn">LinkedIn</a>
+                        <a th:href="'mailto:' + ${portfolio.email}" class="social-btn primary-btn">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pf-main">
+        <div class="pf-container">
+            <!-- Skills -->
+            <section class="pf-card wide-card" th:if="${skills != null and !skills.isEmpty()}">
+                <h3 class="card-title">🛠 Skills</h3>
+                <div class="skills-cloud">
+                    <span class="skill-tag" th:each="skill : ${skills}" th:text="${skill}">Skill</span>
+                </div>
+            </section>
+
+            <!-- Projects — main focus for showcase -->
+            <section class="pf-card wide-card" th:if="${portfolio.projectsJson != null and !portfolio.projectsJson.isEmpty() and portfolio.projectsJson != '[]'}">
+                <h3 class="card-title">🚀 Featured Projects</h3>
+                <div class="projects-showcase" id="projectsList"
+                     th:attr="data-projects=${portfolio.projectsJson}"></div>
+            </section>
+
+            <div class="pf-grid">
+                <section class="pf-card" th:if="${portfolio.education != null and !portfolio.education.isEmpty()}">
+                    <h3 class="card-title">🎓 Education</h3>
+                    <p class="info-text" th:text="${portfolio.education}">Education</p>
+                </section>
+                <section class="pf-card">
+                    <h3 class="card-title">📬 Contact</h3>
+                    <div class="contact-list">
+                        <div class="contact-item">
+                            <span class="contact-label">Email</span>
+                            <a th:href="'mailto:' + ${portfolio.email}" th:text="${portfolio.email}">email</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="pf-footer">
+        <p>Portfolio of <strong th:text="${portfolio.fullName}">Name</strong> — Made with AutoFolio</p>
+        <a href="/create">Create yours →</a>
+    </footer>
+
+    <script th:src="@{/js/portfolio.js}"></script>
+</body>
+</html>

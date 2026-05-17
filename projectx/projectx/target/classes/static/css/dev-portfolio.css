@@ -1,0 +1,120 @@
+/* ================================================
+   AutoFolio — Developer Format CSS
+   ================================================ */
+
+:root {
+    --bg-dark: #0d1117;
+    --card-dark: #161b22;
+    --border-dark: #30363d;
+    --p: #0ea5e9;
+    --p2: #38bdf8;
+    --text: #e6edf3;
+    --text2: #8b949e;
+}
+
+.dev-body {
+    background: var(--bg-dark);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    min-height: 100vh;
+}
+.share-bar.dark { background: #161b22; border-bottom: 1px solid var(--border-dark); }
+
+.dev-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: calc(100vh - 36px);
+}
+
+/* Terminal Sidebar */
+.dev-sidebar {
+    background: var(--card-dark);
+    border-right: 1px solid var(--border-dark);
+    position: sticky;
+    top: 36px;
+    height: calc(100vh - 36px);
+    overflow-y: auto;
+}
+.terminal-bar {
+    background: #21262d;
+    padding: 0.7rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-bottom: 1px solid var(--border-dark);
+    position: sticky;
+    top: 0;
+}
+.t-dot { width: 12px; height: 12px; border-radius: 50%; }
+.t-dot.red { background: #ff5f56; }
+.t-dot.yellow { background: #ffbd2e; }
+.t-dot.green { background: #27c93f; }
+.t-title { margin-left: 0.5rem; font-size: 0.8rem; color: var(--text2); }
+
+.terminal-body { padding: 1.5rem; }
+.dev-avatar {
+    width: 80px; height: 80px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--p), var(--p2));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem; font-weight: 800;
+    color: white;
+    margin-bottom: 1.5rem;
+}
+.term-line { font-size: 0.82rem; color: var(--text2); margin-top: 0.75rem; }
+.term-prompt { color: #27c93f; margin-right: 0.4rem; }
+.term-output { font-size: 0.9rem; color: var(--text); padding-left: 1.2rem; margin-top: 0.2rem; }
+.term-output.accent { color: var(--p); }
+
+.dev-links { display: flex; flex-direction: column; gap: 0.3rem; padding-left: 1.2rem; margin-top: 0.4rem; }
+.dev-link { font-size: 0.85rem; color: var(--text2); transition: color .2s; }
+.dev-link:hover { color: var(--text); }
+.dev-link.accent { color: var(--p); }
+
+/* Main dev content */
+.dev-main { padding: 2.5rem; display: flex; flex-direction: column; gap: 2rem; }
+.dev-section-label {
+    font-size: 0.8rem;
+    color: var(--p);
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+.dev-bio { color: var(--text2); line-height: 1.8; font-size: 0.93rem; }
+.dev-text { color: var(--text2); line-height: 1.7; font-size: 0.9rem; }
+
+.dev-skills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.dev-skill {
+    border: 1px solid var(--p);
+    color: var(--p);
+    padding: 0.3rem 0.9rem;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    transition: all .2s;
+}
+.dev-skill:hover { background: var(--p); color: var(--bg-dark); }
+
+/* Dev project cards */
+.dev-project {
+    background: var(--card-dark);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 0.75rem;
+    border-left: 3px solid var(--p);
+    transition: all .2s;
+}
+.dev-project:hover { border-color: var(--p2); background: #1c2128; }
+.dev-proj-title { color: var(--text); font-weight: 600; margin-bottom: 0.3rem; font-size: 0.95rem; }
+.dev-proj-tech { color: var(--p2); font-size: 0.78rem; margin-bottom: 0.5rem; }
+.dev-proj-desc { color: var(--text2); font-size: 0.84rem; line-height: 1.6; margin-bottom: 0.75rem; }
+.dev-proj-links { display: flex; gap: 0.75rem; }
+.dev-proj-link { color: var(--p); font-size: 0.8rem; }
+.dev-proj-link:hover { text-decoration: underline; }
+
+@media (max-width: 768px) {
+    .dev-layout { grid-template-columns: 1fr; }
+    .dev-sidebar { position: static; height: auto; }
+    .dev-main { padding: 1.5rem; }
+}

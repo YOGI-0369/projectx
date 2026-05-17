@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>AutoFolio — Build Your Portfolio in Minutes</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body class="home-body">
+
+    <!-- NAV -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">Auto<span>Folio</span></a>
+            <div class="nav-links">
+                <a href="/gallery">Explore</a>
+                <a href="/create" class="btn-nav">Create Portfolio →</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg-circles">
+            <div class="circle c1"></div>
+            <div class="circle c2"></div>
+            <div class="circle c3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">✦ Free Portfolio Builder</div>
+            <h1 class="hero-title">
+                Your Portfolio,<br/>
+                <span class="gradient-text">Your Identity.</span>
+            </h1>
+            <p class="hero-sub">
+                Fill in your details, pick a theme &amp; format — and get a stunning
+                portfolio page in under 2 minutes. No design skills needed.
+            </p>
+            <div class="hero-actions">
+                <a href="/create" class="btn-primary">Build My Portfolio →</a>
+                <a href="/gallery" class="btn-ghost">See Examples</a>
+            </div>
+            <p class="hero-stat">
+                <span th:text="${totalPortfolios}">0</span> portfolios created so far
+            </p>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Everything You Need</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>6 Beautiful Themes</h3>
+                    <p>Ocean, Sunset, Forest, Midnight, Rose, Slate — each with a unique color palette.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📐</div>
+                    <h3>6 Portfolio Formats</h3>
+                    <p>Professional, Showcase, Business, Creative, Minimal, Developer — pick what fits you.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant &amp; Free</h3>
+                    <p>No account needed. Fill the form, get your link. Share it anywhere.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Shareable Link</h3>
+                    <p>Every portfolio gets a unique URL: autofolio/portfolio/yourname</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">01</div>
+                    <h3>Fill Your Details</h3>
+                    <p>Name, bio, skills, projects, social links — all in one form.</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-num">02</div>
+                    <h3>Choose Theme &amp; Format</h3>
+                    <p>Pick a color theme and portfolio style that matches your personality.</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-num">03</div>
+                    <h3>Get Your Portfolio</h3>
+                    <p>Instantly get a beautiful portfolio page with a shareable link.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to stand out?</h2>
+            <p>Your portfolio is just a few clicks away.</p>
+            <a href="/create" class="btn-primary large">Start Building — It's Free →</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>Built with ❤️ using Spring Boot + Thymeleaf + MySQL</p>
+    </footer>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

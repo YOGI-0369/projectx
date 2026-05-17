@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Portfolio Not Found — AutoFolio</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400&display=swap" rel="stylesheet"/>
+</head>
+<body class="home-body" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;gap:1.5rem">
+    <div style="font-size:5rem">🔍</div>
+    <h1 style="font-family:Syne,sans-serif;font-size:2.5rem">Portfolio Not Found</h1>
+    <p style="color:#64748b;max-width:400px">
+        No portfolio found for username <strong th:text="'@' + ${username}">@username</strong>.
+        Maybe the link is wrong, or this user hasn't created one yet.
+    </p>
+    <div style="display:flex;gap:1rem">
+        <a href="/" class="btn-ghost">← Home</a>
+        <a href="/create" class="btn-primary">Create Portfolio →</a>
+    </div>
+</body>
+</html>

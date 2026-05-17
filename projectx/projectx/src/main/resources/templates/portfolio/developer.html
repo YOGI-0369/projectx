@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${portfolio.fullName} + ' — Dev Portfolio'">Portfolio</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/portfolio.css}"/>
+    <link rel="stylesheet" th:href="@{/css/dev-portfolio.css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+    <th:block th:switch="${portfolio.theme}">
+        <th:block th:case="'sunset'"><style>:root{--p:#e85d04;--p2:#f48c06}</style></th:block>
+        <th:block th:case="'forest'"><style>:root{--p:#52b788;--p2:#74c69d}</style></th:block>
+        <th:block th:case="'rose'"><style>:root{--p:#f43f5e;--p2:#fb7185}</style></th:block>
+        <th:block th:case="'slate'"><style>:root{--p:#94a3b8;--p2:#cbd5e1}</style></th:block>
+        <th:block th:case="*"><style>:root{--p:#0ea5e9;--p2:#38bdf8}</style></th:block>
+    </th:block>
+</head>
+<body class="dev-body">
+
+    <div class="share-bar dark">
+        <span>✦ Created with AutoFolio</span>
+        <a href="/create" class="share-cta">Build Yours →</a>
+    </div>
+
+    <div class="dev-layout">
+
+        <!-- Terminal Sidebar -->
+        <aside class="dev-sidebar">
+            <div class="terminal-bar">
+                <span class="t-dot red"></span>
+                <span class="t-dot yellow"></span>
+                <span class="t-dot green"></span>
+                <span class="t-title">portfolio.sh</span>
+            </div>
+            <div class="terminal-body">
+                <div class="dev-avatar">
+                    <span th:text="${portfolio.fullName.substring(0,1).toUpperCase()}">R</span>
+                </div>
+                <div class="term-line"><span class="term-prompt">$</span> whoami</div>
+                <div class="term-output" th:text="${portfolio.fullName}">Name</div>
+                <div class="term-line"><span class="term-prompt">$</span> cat role.txt</div>
+                <div class="term-output accent" th:text="${portfolio.jobTitle}">Role</div>
+                <div class="term-line" th:if="${portfolio.location != null and !portfolio.location.isEmpty()}">
+                    <span class="term-prompt">$</span> echo $LOCATION
+                </div>
+                <div class="term-output" th:if="${portfolio.location != null and !portfolio.location.isEmpty()}"
+                     th:text="${portfolio.location}">Location</div>
+                <div class="term-line"><span class="term-prompt">$</span> ls links/</div>
+                <div class="dev-links">
+                    <a th:if="${portfolio.githubUrl != null and !portfolio.githubUrl.isEmpty()}"
+                       th:href="${portfolio.githubUrl}" target="_blank" class="dev-link">→ github</a>
+                    <a th:if="${portfolio.linkedinUrl != null and !portfolio.linkedinUrl.isEmpty()}"
+                       th:href="${portfolio.linkedinUrl}" target="_blank" class="dev-link">→ linkedin</a>
+                    <a th:if="${portfolio.websiteUrl != null and !portfolio.websiteUrl.isEmpty()}"
+                       th:href="${portfolio.websiteUrl}" target="_blank" class="dev-link">→ website</a>
+                    <a th:href="'mailto:' + ${portfolio.email}" class="dev-link accent">→ email</a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="dev-main">
+
+            <!-- About -->
+            <section class="dev-section">
+                <div class="dev-section-label">// about</div>
+                <p class="dev-bio" th:text="${portfolio.bio}">Bio</p>
+            </section>
+
+            <!-- Skills -->
+            <section class="dev-section" th:if="${skills != null and !skills.isEmpty()}">
+                <div class="dev-section-label">// skills</div>
+                <div class="dev-skills">
+                    <span class="dev-skill" th:each="skill : ${skills}" th:text="${skill}">Skill</span>
+                </div>
+            </section>
+
+            <!-- Education & Experience -->
+            <section class="dev-section" th:if="${portfolio.education != null and !portfolio.education.isEmpty()}">
+                <div class="dev-section-label">// education</div>
+                <p class="dev-text" th:text="${portfolio.education}">Education</p>
+            </section>
+
+            <section class="dev-section" th:if="${portfolio.experience != null and !portfolio.experience.isEmpty()}">
+                <div class="dev-section-label">// experience</div>
+                <p class="dev-text" th:text="${portfolio.experience}">Experience</p>
+            </section>
+
+            <!-- Projects -->
+            <section class="dev-section" th:if="${portfolio.projectsJson != null and !portfolio.projectsJson.isEmpty() and portfolio.projectsJson != '[]'}">
+                <div class="dev-section-label">// projects</div>
+                <div class="dev-projects" id="projectsList"
+                     th:attr="data-projects=${portfolio.projectsJson}">
+                    <!-- Rendered by JS -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script th:src="@{/js/portfolio.js}"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Explore Portfolios — AutoFolio</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body class="home-body">
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">Auto<span>Folio</span></a>
+            <div class="nav-links">
+                <a href="/create" class="btn-nav">Create Portfolio →</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="padding-top:6rem">
+        <h1 class="section-title">Explore Portfolios</h1>
+        <p style="text-align:center;color:#64748b;margin-bottom:3rem">
+            <span th:text="${portfolios.size()}">0</span> portfolios created so far
+        </p>
+
+        <!-- Empty state -->
+        <div th:if="${portfolios.isEmpty()}" style="text-align:center;padding:4rem">
+            <div style="font-size:4rem">📂</div>
+            <h2>No portfolios yet</h2>
+            <p style="color:#64748b">Be the first one!</p>
+            <a href="/create" class="btn-primary" style="margin-top:1rem;display:inline-block">Create Portfolio →</a>
+        </div>
+
+        <!-- Gallery grid -->
+        <div class="gallery-grid" th:unless="${portfolios.isEmpty()}">
+            <a class="gallery-card"
+               th:each="p : ${portfolios}"
+               th:href="@{/portfolio/{u}(u=${p.username})}">
+                <div class="gallery-avatar" th:text="${p.fullName.substring(0,1).toUpperCase()}">A</div>
+                <div class="gallery-info">
+                    <h3 th:text="${p.fullName}">Name</h3>
+                    <p th:text="${p.jobTitle}">Role</p>
+                    <div class="gallery-meta">
+                        <span class="badge" th:text="${p.theme}">theme</span>
+                        <span class="badge" th:text="${p.format}">format</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

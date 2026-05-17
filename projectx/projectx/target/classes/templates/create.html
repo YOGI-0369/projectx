@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Create Your Portfolio — AutoFolio</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/create.css}"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body class="create-body">
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">Auto<span>Folio</span></a>
+            <div class="nav-links">
+                <a href="/gallery">Explore</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="create-layout">
+        <!-- LEFT PANEL: PROGRESS -->
+        <aside class="create-sidebar">
+            <div class="sidebar-inner">
+                <h2 class="sidebar-title">Build Your Portfolio</h2>
+                <p class="sidebar-sub">Complete each section to create your page</p>
+                <ul class="progress-steps">
+                    <li class="step-item active" data-section="personal">
+                        <div class="step-dot"></div>
+                        <span>Personal Info</span>
+                    </li>
+                    <li class="step-item" data-section="skills">
+                        <div class="step-dot"></div>
+                        <span>Skills &amp; Links</span>
+                    </li>
+                    <li class="step-item" data-section="projects">
+                        <div class="step-dot"></div>
+                        <span>Projects</span>
+                    </li>
+                    <li class="step-item" data-section="design">
+                        <div class="step-dot"></div>
+                        <span>Design</span>
+                    </li>
+                </ul>
+                <div class="sidebar-tip">
+                    <span>💡</span>
+                    <p>Your portfolio will be live at <strong>/portfolio/yourusername</strong></p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- RIGHT PANEL: FORM -->
+        <main class="create-main">
+            <form th:action="@{/create}" th:object="${portfolio}" method="post" id="portfolioForm" novalidate>
+
+                <!-- ===== SECTION 1: PERSONAL INFO ===== -->
+                <div class="form-section active" id="section-personal">
+                    <div class="section-header">
+                        <div class="section-badge">01</div>
+                        <div>
+                            <h2>Personal Information</h2>
+                            <p>Tell the world who you are</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid two-col">
+                        <div class="form-group">
+                            <label for="fullName">Full Name *</label>
+                            <input type="text" id="fullName" th:field="*{fullName}"
+                                   placeholder="e.g. Rahul Sharma" class="form-input"
+                                   th:classappend="${#fields.hasErrors('fullName')} ? 'error' : ''"/>
+                            <span class="field-error" th:if="${#fields.hasErrors('fullName')}"
+                                  th:errors="*{fullName}"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username * <span class="label-hint">(your portfolio URL)</span></label>
+                            <input type="text" id="username" th:field="*{username}"
+                                   placeholder="e.g. rahulsharma" class="form-input"
+                                   th:classappend="${#fields.hasErrors('username')} ? 'error' : ''"/>
+                            <span class="field-error" th:if="${#fields.hasErrors('username')}"
+                                  th:errors="*{username}"></span>
+                            <span class="username-status" id="usernameStatus"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" th:field="*{email}"
+                                   placeholder="rahul@example.com" class="form-input"
+                                   th:classappend="${#fields.hasErrors('email')} ? 'error' : ''"/>
+                            <span class="field-error" th:if="${#fields.hasErrors('email')}"
+                                  th:errors="*{email}"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="text" id="phone" th:field="*{phone}"
+                                   placeholder="+91 98765 43210" class="form-input"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="jobTitle">Job Title / Role *</label>
+                            <input type="text" id="jobTitle" th:field="*{jobTitle}"
+                                   placeholder="e.g. Full Stack Developer" class="form-input"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" th:field="*{location}"
+                                   placeholder="e.g. Hyderabad, India" class="form-input"/>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="bio">Bio / About You *</label>
+                            <textarea id="bio" th:field="*{bio}" rows="4"
+                                      placeholder="Write a short bio about yourself, your passion, and what you do..."
+                                      class="form-input"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="button" class="btn-primary" onclick="nextSection('skills')">Continue →</button>
+                    </div>
+                </div>
+
+                <!-- ===== SECTION 2: SKILLS & LINKS ===== -->
+                <div class="form-section" id="section-skills">
+                    <div class="section-header">
+                        <div class="section-badge">02</div>
+                        <div>
+                            <h2>Skills &amp; Social Links</h2>
+                            <p>What are you good at? Where can people find you?</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="skills">Skills <span class="label-hint">(comma-separated)</span></label>
+                            <input type="text" id="skills" th:field="*{skills}"
+                                   placeholder="Java, Spring Boot, React, MySQL, Python, Docker..."
+                                   class="form-input"/>
+                            <div class="skills-preview" id="skillsPreview"></div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="education">Education</label>
+                            <input type="text" id="education" th:field="*{education}"
+                                   placeholder="B.Tech in Computer Science — JNTU, 2025" class="form-input"/>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="experience">Experience</label>
+                            <textarea id="experience" th:field="*{experience}" rows="3"
+                                      placeholder="e.g. 2 years as Java Developer at TCS | Intern at StartupXYZ..."
+                                      class="form-input"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="section-divider">Social Links</div>
+
+                    <div class="form-grid two-col">
+                        <div class="form-group">
+                            <label>🐙 GitHub URL</label>
+                            <input type="url" th:field="*{githubUrl}"
+                                   placeholder="https://github.com/username" class="form-input"/>
+                        </div>
+                        <div class="form-group">
+                            <label>💼 LinkedIn URL</label>
+                            <input type="url" th:field="*{linkedinUrl}"
+                                   placeholder="https://linkedin.com/in/username" class="form-input"/>
+                        </div>
+                        <div class="form-group">
+                            <label>🌐 Website / Portfolio</label>
+                            <input type="url" th:field="*{websiteUrl}"
+                                   placeholder="https://yourwebsite.com" class="form-input"/>
+                        </div>
+                        <div class="form-group">
+                            <label>🐦 Twitter / X URL</label>
+                            <input type="url" th:field="*{twitterUrl}"
+                                   placeholder="https://twitter.com/username" class="form-input"/>
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="button" class="btn-ghost" onclick="prevSection('personal')">← Back</button>
+                        <button type="button" class="btn-primary" onclick="nextSection('projects')">Continue →</button>
+                    </div>
+                </div>
+
+                <!-- ===== SECTION 3: PROJECTS ===== -->
+                <div class="form-section" id="section-projects">
+                    <div class="section-header">
+                        <div class="section-badge">03</div>
+                        <div>
+                            <h2>Projects</h2>
+                            <p>Showcase your best work</p>
+                        </div>
+                    </div>
+
+                    <div class="projects-builder" id="projectsBuilder">
+                        <div class="project-item" id="project-0">
+                            <div class="project-item-header">
+                                <h4>Project 1</h4>
+                            </div>
+                            <div class="form-grid two-col">
+                                <div class="form-group">
+                                    <label>Project Name</label>
+                                    <input type="text" class="form-input proj-name"
+                                           placeholder="e.g. E-Commerce App"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tech Stack</label>
+                                    <input type="text" class="form-input proj-tech"
+                                           placeholder="e.g. React, Node.js, MongoDB"/>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label>Description</label>
+                                    <textarea class="form-input proj-desc" rows="2"
+                                              placeholder="What does this project do?"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>GitHub Link</label>
+                                    <input type="url" class="form-input proj-github"
+                                           placeholder="https://github.com/..."/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Live Demo Link</label>
+                                    <input type="url" class="form-input proj-demo"
+                                           placeholder="https://..."/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-add-project" onclick="addProject()">+ Add Another Project</button>
+
+                    <!-- Hidden field to store projects JSON -->
+                    <input type="hidden" th:field="*{projectsJson}" id="projectsJsonField"/>
+
+                    <div class="form-footer">
+                        <button type="button" class="btn-ghost" onclick="prevSection('skills')">← Back</button>
+                        <button type="button" class="btn-primary" onclick="nextSection('design')">Continue →</button>
+                    </div>
+                </div>
+
+                <!-- ===== SECTION 4: DESIGN ===== -->
+                <div class="form-section" id="section-design">
+                    <div class="section-header">
+                        <div class="section-badge">04</div>
+                        <div>
+                            <h2>Choose Your Design</h2>
+                            <p>Make it yours — pick a theme and format</p>
+                        </div>
+                    </div>
+
+                    <!-- THEME PICKER -->
+                    <div class="picker-section">
+                        <h3 class="picker-title">Color Theme</h3>
+                        <div class="theme-picker">
+                            <label class="theme-option selected" data-theme="ocean">
+                                <input type="radio" th:field="*{theme}" value="ocean" checked/>
+                                <div class="theme-swatch ocean-swatch"></div>
+                                <span>Ocean</span>
+                            </label>
+                            <label class="theme-option" data-theme="sunset">
+                                <input type="radio" th:field="*{theme}" value="sunset"/>
+                                <div class="theme-swatch sunset-swatch"></div>
+                                <span>Sunset</span>
+                            </label>
+                            <label class="theme-option" data-theme="forest">
+                                <input type="radio" th:field="*{theme}" value="forest"/>
+                                <div class="theme-swatch forest-swatch"></div>
+                                <span>Forest</span>
+                            </label>
+                            <label class="theme-option" data-theme="midnight">
+                                <input type="radio" th:field="*{theme}" value="midnight"/>
+                                <div class="theme-swatch midnight-swatch"></div>
+                                <span>Midnight</span>
+                            </label>
+                            <label class="theme-option" data-theme="rose">
+                                <input type="radio" th:field="*{theme}" value="rose"/>
+                                <div class="theme-swatch rose-swatch"></div>
+                                <span>Rose</span>
+                            </label>
+                            <label class="theme-option" data-theme="slate">
+                                <input type="radio" th:field="*{theme}" value="slate"/>
+                                <div class="theme-swatch slate-swatch"></div>
+                                <span>Slate</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- FORMAT PICKER -->
+                    <div class="picker-section">
+                        <h3 class="picker-title">Portfolio Format</h3>
+                        <div class="format-picker">
+                            <label class="format-option selected" data-format="professional">
+                                <input type="radio" th:field="*{format}" value="professional" checked/>
+                                <div class="format-icon">👔</div>
+                                <div class="format-info">
+                                    <strong>Professional</strong>
+                                    <span>Clean, formal — great for job applications</span>
+                                </div>
+                            </label>
+                            <label class="format-option" data-format="showcase">
+                                <input type="radio" th:field="*{format}" value="showcase"/>
+                                <div class="format-icon">🎯</div>
+                                <div class="format-info">
+                                    <strong>Showcase</strong>
+                                    <span>Project-focused — highlight your work</span>
+                                </div>
+                            </label>
+                            <label class="format-option" data-format="minimal">
+                                <input type="radio" th:field="*{format}" value="minimal"/>
+                                <div class="format-icon">✦</div>
+                                <div class="format-info">
+                                    <strong>Minimal</strong>
+                                    <span>Clean &amp; simple — let content speak</span>
+                                </div>
+                            </label>
+                            <label class="format-option" data-format="developer">
+                                <input type="radio" th:field="*{format}" value="developer"/>
+                                <div class="format-icon">💻</div>
+                                <div class="format-info">
+                                    <strong>Developer</strong>
+                                    <span>Terminal-inspired — built for coders</span>
+                                </div>
+                            </label>
+                            <label class="format-option" data-format="creative">
+                                <input type="radio" th:field="*{format}" value="creative"/>
+                                <div class="format-icon">🎨</div>
+                                <div class="format-info">
+                                    <strong>Creative</strong>
+                                    <span>Bold &amp; artistic — for designers</span>
+                                </div>
+                            </label>
+                            <label class="format-option" data-format="business">
+                                <input type="radio" th:field="*{format}" value="business"/>
+                                <div class="format-icon">📊</div>
+                                <div class="format-info">
+                                    <strong>Business</strong>
+                                    <span>Corporate style — for entrepreneurs</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="button" class="btn-ghost" onclick="prevSection('projects')">← Back</button>
+                        <button type="submit" class="btn-primary large" onclick="collectProjects()">
+                            🚀 Create My Portfolio
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </main>
+    </div>
+
+    <script th:src="@{/js/create.js}"></script>
+</body>
+</html>
